@@ -31,10 +31,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default () => {
   const { authState, onLogout } = useAuth();
-
-  useEffect(() => {
-    console.log("authState changed to ", authState);
-  }, [authState]);
+  console.log("authState changed to ", useAuth());
 
   if (authState?.authenticated !== true) {
     return <Redirect href="/login" />;
