@@ -1,30 +1,9 @@
-// import { Redirect, Stack } from "expo-router";
-
-// import { useSession } from "@/context/ctx";
-// import { Text } from "@/components/Themed";
-
-// export default function AppLayout() {
-//   const { session, isLoading } = useSession();
-
-//   // You can keep the splash screen open, or render a loading screen like we do here.
-//   if (isLoading) {
-//     return <Text>Loading...</Text>;
-//   }
-
-//   if (!session) {
-//     return <Redirect href="/sign-in" />;
-//   }
-
-//   return <Stack />;
-// }
-
-import { Redirect, Tabs } from "expo-router";
+import { Redirect, Stack, Tabs } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { ActivityIndicator, View, StyleSheet, Button } from "react-native";
 
 import { useAuth } from "../../context/AuthContextProps";
 import { useEffect } from "react";
-import { Text } from "@/components/Themed";
-import { Button } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,7 +19,11 @@ export default () => {
   }, [authState]);
 
   if (authState?.authenticated === null) {
-    return <Text>Loading... </Text>; // Show nothing or a loading spinner until the auth state is determined
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   if (authState?.authenticated !== true) {
@@ -55,3 +38,11 @@ export default () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
