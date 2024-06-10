@@ -25,6 +25,11 @@ export const AuthProvider = ({ children }: any) => {
           token: token,
           authenticated: true,
         });
+      } else {
+        setAuthState({
+          token: null,
+          authenticated: false,
+        });
       }
     };
     loadToken();
@@ -34,7 +39,7 @@ export const AuthProvider = ({ children }: any) => {
   const login = async (email: string, password: string) => {
     try {
       const result = await axios.post(`${API_URL}/auth`, { email, password });
-      console.log("[login] : ", result);
+      console.log("[LOGIN] ", result.data);
 
       setAuthState({
         token: result.data.token,
