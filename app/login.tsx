@@ -1,21 +1,19 @@
 import { View, Text, TextInput, Button, StyleSheet, Pressable } from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContextProps";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { onLogin, onRegister } = useAuth();
-  const router = useRouter();
 
   const handleLogin = async () => {
     const res = await onLogin!(email, password);
-    console.log("SUCCESS LOGIN", res.data);
     if (res && res.error) {
       alert(res.msg);
     } else {
-      router.push("/");
+      router.replace("/");
     }
   };
 
