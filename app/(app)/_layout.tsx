@@ -21,7 +21,7 @@ export default () => {
   if (authState?.authenticated === null) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="black" />
       </View>
     );
   }

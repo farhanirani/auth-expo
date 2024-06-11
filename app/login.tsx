@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Button, StyleSheet, Pressable } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Pressable, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContextProps";
 import { router, useRouter } from "expo-router";
@@ -7,9 +7,12 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { onLogin, onRegister } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
+    setLoading(true);
     const res = await onLogin!(email, password);
+    setLoading(false);
     if (res && res.error) {
       alert(res.msg);
     } else {
@@ -18,13 +21,23 @@ export default function LoginPage() {
   };
 
   const handleRegister = async () => {
+    setLoading(true);
     const res = await onRegister!(email, password);
+    setLoading(false);
     if (res && res.error) {
       alert(res.msg);
     } else {
       handleLogin();
     }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1, gap: 20, justifyContent: "center", alignItems: "center" }}>
@@ -63,5 +76,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
