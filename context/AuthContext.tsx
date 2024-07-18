@@ -3,9 +3,7 @@ import { Text, View, StyleSheet, TextInput, Button } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
 import { AuthContext } from "./AuthContextProps";
-
-export const SECURE_TOKEN_KEY = "x-token-key";
-export const API_URL = "https://api.developbetterapps.com";
+import { API_URL, SECURE_TOKEN_KEY } from "@/constants/Constants";
 
 export const AuthProvider = ({ children }: any) => {
   const [authState, setAuthState] = useState<{
